@@ -190,69 +190,74 @@ footer {
   .admin-overlay {
     display: none; position: fixed; inset: 0; z-index: 1000;
     background: rgba(26,24,20,0.55); backdrop-filter: blur(3px);
-    align-items: center; justify-content: center; padding: 1rem;
+    align-items: center; justify-content: center; padding: .5rem;
   }
   .admin-overlay.open { display: flex; }
   .admin-panel {
     background: var(--surface); border-radius: 12px; box-shadow: 0 8px 40px rgba(0,0,0,0.18);
-    width: 100%; max-width: 960px; max-height: 92vh; overflow: hidden;
-    display: flex; flex-direction: column;
+    width: calc(100vw - 1rem); height: calc(100vh - 1rem); max-width: none; max-height: none;
+    overflow: hidden; display: flex; flex-direction: column;
   }
   .admin-header {
-    padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
   }
-  .admin-header h2 { font-family: 'DM Serif Display', serif; font-size: 1.25rem; font-weight: 400; }
+  .admin-header h2 { font-family: 'DM Serif Display', serif; font-size: 1.35rem; font-weight: 400; }
   .admin-close { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text2); line-height: 1; padding: 4px; }
-  .admin-body { overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
-
-  .admin-login { text-align: center; padding: 2rem 1rem; }
-  .admin-login input { width: 220px; margin: .8rem auto; display: block; text-align: center; }
-  .admin-login button {
-    background: var(--accent); color: #fff; border: none; border-radius: 6px;
-    padding: 8px 24px; font-family: inherit; font-size: .88rem; cursor: pointer;
+  .admin-tabs {
+    display: flex; gap: 0; border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem; background: var(--surface); flex-shrink: 0;
   }
-  .admin-login .err { color: var(--ac-vc); font-size: .82rem; margin-top: .5rem; display: none; }
+  .admin-tab {
+    padding: .65rem 1.2rem; font-size: .85rem; cursor: pointer;
+    border-bottom: 2px solid transparent; color: var(--text2); font-weight: 400;
+    margin-bottom: -1px; transition: all .15s;
+  }
+  .admin-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 500; }
+  .admin-body { overflow-y: auto; padding: 1.5rem; flex: 1; display: flex; flex-direction: column; gap: 1rem; }
+  .admin-footer-bar {
+    border-top: 1px solid var(--border); padding: 1rem 1.5rem; background: var(--surface2);
+    flex-shrink: 0; display: flex; flex-direction: column; gap: .8rem;
+  }
+  .admin-footer-actions { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
 
-  .admin-section h3 { font-size: .95rem; font-weight: 500; margin-bottom: .8rem; color: var(--text); }
+  .admin-section h3 { font-family: 'DM Serif Display', serif; font-size: 1.05rem; font-weight: 400; margin-bottom: .8rem; color: var(--text); }
+  .admin-section-desc { font-size: .82rem; color: var(--text2); margin-bottom: 1rem; line-height: 1.5; }
   .admin-controls { display: flex; flex-wrap: wrap; gap: .8rem; align-items: flex-end; margin-bottom: 1rem; }
   .admin-controls label { font-size: .78rem; font-weight: 500; color: var(--text2); text-transform: uppercase; letter-spacing: .06em; display: flex; flex-direction: column; gap: 4px; }
-  .admin-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
-  .admin-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
-  .admin-table th { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 500; color: var(--text2); padding: .5rem .6rem; border-bottom: 2px solid var(--border2); text-align: right; background: var(--surface2); white-space: nowrap; }
-  .admin-table th:first-child { text-align: left; position: sticky; left: 0; background: var(--surface2); z-index: 1; }
-  .admin-table td { padding: 3px; border-bottom: 1px solid var(--border); }
-  .admin-table td:first-child { font-weight: 500; padding-left: .6rem; white-space: nowrap; position: sticky; left: 0; background: var(--surface); z-index: 1; }
-  .admin-table input { width: 90px; font-size: .78rem; padding: 4px 6px; text-align: right; border: 1px solid transparent; border-radius: 4px; background: transparent; }
-  .admin-table input:focus { border-color: var(--accent); background: var(--bg); outline: none; }
+  .admin-table-wrap { overflow: auto; border: 1px solid var(--border); border-radius: var(--radius); max-height: calc(100vh - 320px); }
+  .admin-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+  .admin-table th { font-size: .71rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 500; color: var(--text2); padding: .55rem .6rem; border-bottom: 2px solid var(--border2); text-align: right; background: var(--surface2); white-space: nowrap; }
+  .admin-table th:first-child, .admin-table th.admin-sticky { text-align: left; position: sticky; left: 0; background: var(--surface2); z-index: 2; }
+  .admin-table th.admin-year-group { text-align: center; border-left: 1px solid var(--border); }
+  .admin-table th.admin-sub { font-size: .65rem; font-weight: 400; padding: .35rem .4rem; }
+  .admin-table td { padding: 4px; border-bottom: 1px solid var(--border); text-align: right; }
+  .admin-table td:first-child { font-weight: 500; padding-left: .7rem; white-space: nowrap; position: sticky; left: 0; background: var(--surface); z-index: 1; text-align: left; }
+  .admin-table td.admin-year-cell { border-left: 1px solid var(--border); }
+  .admin-table input { width: 82px; font-size: .78rem; padding: 5px 6px; text-align: right; border: 1px solid var(--border); border-radius: 4px; background: var(--bg); font-family: inherit; }
+  .admin-table input:focus { border-color: var(--accent); outline: none; }
   .admin-table input.changed { background: rgba(44,95,138,0.08); border-color: var(--accent); }
+  .admin-table .admin-total-val { display: block; padding: 5px 6px; font-size: .78rem; color: var(--accent); font-weight: 500; background: rgba(44,95,138,0.06); border-radius: 4px; min-width: 82px; }
+  .admin-table .admin-total-val.null-val { color: #a06800; font-style: italic; background: #fff8e8; }
 
   .admin-btn {
     background: var(--accent); color: #fff; border: none; border-radius: 6px;
-    padding: 7px 16px; font-family: inherit; font-size: .83rem; cursor: pointer;
+    padding: 8px 16px; font-family: inherit; font-size: .83rem; font-weight: 500; cursor: pointer;
   }
   .admin-btn:hover { opacity: .9; }
-  .admin-btn.secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border2); }
-  .admin-btn.danger { background: var(--ac-vc); }
+  .admin-btn.secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border2); }
   .admin-btn-row { display: flex; flex-wrap: wrap; gap: .6rem; }
-
-  .admin-export textarea {
-    width: 100%; min-height: 140px; font-family: 'Courier New', monospace; font-size: .72rem;
-    padding: .8rem; border: 1px solid var(--border2); border-radius: 8px; background: var(--bg);
-    color: var(--text); resize: vertical; line-height: 1.4;
-  }
-
-  .admin-tutorial { background: var(--surface2); border-radius: 8px; padding: 1.2rem 1.4rem; }
-  .admin-tutorial h3 { margin-bottom: 1rem; }
-  .admin-steps { list-style: none; counter-reset: step; display: flex; flex-direction: column; gap: .9rem; }
-  .admin-steps li { counter-increment: step; padding-left: 2.2rem; position: relative; font-size: .85rem; line-height: 1.5; color: var(--text); }
-  .admin-steps li::before {
-    content: counter(step); position: absolute; left: 0; top: 0;
-    width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accent); color: #fff;
-    font-size: .75rem; font-weight: 500; display: flex; align-items: center; justify-content: center;
-  }
-  .admin-steps code { background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius: 3px; font-size: .8rem; }
   .admin-badge { display: inline-block; background: var(--accent); color: #fff; font-size: .7rem; padding: 2px 8px; border-radius: 10px; margin-left: .5rem; vertical-align: middle; }
+
+  .admin-download-form {
+    display: none; padding: 1rem; background: var(--surface); border: 1px solid var(--border2);
+    border-radius: var(--radius); gap: .8rem; flex-wrap: wrap; align-items: flex-end;
+  }
+  .admin-download-form.visible { display: flex; }
+  .admin-download-form label { font-size: .78rem; font-weight: 500; color: var(--text2); text-transform: uppercase; letter-spacing: .06em; display: flex; flex-direction: column; gap: 4px; }
+  .admin-download-form input { font-family: inherit; font-size: .88rem; padding: 6px 10px; border: 1px solid var(--border2); border-radius: 6px; background: var(--bg); min-width: 140px; }
+  .admin-download-form input:focus { border-color: var(--accent); outline: none; }
+  .footer-modified { display: block; font-size: .72rem; color: var(--text2); font-weight: 400; margin-top: .2rem; }
 
 /* ── SECTION SANTÉ ─────────────────────────────────────────────────────────── */
 .sante-section {
@@ -516,7 +521,7 @@ footer {
 </section>
 
 <footer>
-  <span class="footer-text">Source : UNSCEB et rapports annuels des OI 2025	| 	Mission permanente de la France auprès de l'Office des Nations Unies à Genève</span>
+  <span class="footer-text">Source : UNSCEB et rapports annuels des OI 2025	| 	Mission permanente de la France auprès de l'Office des Nations Unies à Genève<span class="footer-modified" id="footerModified"></span></span>
   <button type="button" class="admin-trigger" onclick="openAdmin()" title="Administration des données">
     <span class="admin-trigger-icon" aria-hidden="true">&#9881;</span> Espace admin
   </button>
@@ -528,7 +533,9 @@ footer {
       <h2>Administration des données</h2>
       <button type="button" class="admin-close" onclick="closeAdmin()" aria-label="Fermer">&times;</button>
     </div>
+    <div class="admin-tabs" id="adminTabs"></div>
     <div class="admin-body" id="adminBody"></div>
+    <div class="admin-footer-bar" id="adminFooterBar"></div>
   </div>
 </div>
 
@@ -1194,12 +1201,26 @@ function selectNoneDonors() {
 }
 
 // ── ADMIN ─────────────────────────────────────────────────────────────────────
-const ADMIN_PASSWORD = 'admin2026';
-let adminAuthenticated = false;
 let adminWorkingData = null;
+let adminActiveTab = 'contributions';
+let adminDownloadFormVisible = false;
+let pageTemplateHtml = null;
+
+const ADMIN_TAB_LABELS = {
+  contributions: 'Contributions',
+  fx: 'Taux de change',
+  fonds: 'Fonds Verticaux'
+};
+const ADMIN_DEFAULT_ORG_COLORS = ['#2c5f8a','#8a2c2c','#1a7a5e','#b07d2a','#6b3fa0','#2c7a8a','#c0392b','#3a9e6b','#7a5c2c','#5a2c8a'];
+const ADMIN_DEFAULT_DONOR_COLORS = ['#2c5f8a','#c9414b','#1a7a5e','#b07d2a','#6b3fa0','#e07020','#2c7a8a','#e91e8c','#111111','#4a7a2c'];
+
+function capturePageTemplate() {
+  if (!pageTemplateHtml) pageTemplateHtml = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+}
 
 function openAdmin() {
   document.getElementById('adminOverlay').classList.add('open');
+  if (!adminWorkingData) adminWorkingData = deepClone(PAGEBLOCK);
   renderAdminPanel();
 }
 
@@ -1207,57 +1228,82 @@ function closeAdmin() {
   document.getElementById('adminOverlay').classList.remove('open');
 }
 
-function renderAdminPanel() {
-  const body = document.getElementById('adminBody');
-  if (!adminAuthenticated) {
-    body.innerHTML = `
-      <div class="admin-login">
-        <p style="color:var(--text2);font-size:.88rem;">Accès réservé — saisissez le mot de passe</p>
-        <input type="password" id="adminPwd" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')checkAdminPassword()">
-        <button type="button" onclick="checkAdminPassword()">Accéder</button>
-        <p class="err" id="adminPwdErr">Mot de passe incorrect</p>
-      </div>`;
-    return;
-  }
-  if (!adminWorkingData) adminWorkingData = deepClone(PAGEBLOCK);
-  if (document.getElementById('adminContribTable')) collectAdminFormData();
-  body.innerHTML = buildAdminHTML();
-}
-
-function checkAdminPassword() {
-  const pwd = document.getElementById('adminPwd').value;
-  if (pwd === ADMIN_PASSWORD) {
-    adminAuthenticated = true;
-    adminWorkingData = deepClone(PAGEBLOCK);
-    renderAdminPanel();
-  } else {
-    document.getElementById('adminPwdErr').style.display = 'block';
-  }
-}
-
 function deepClone(obj) { return JSON.parse(JSON.stringify(obj)); }
 
-function buildAdminHTML() {
-  const wd = adminWorkingData;
-  const types = ['AC', 'VC', 'TOTAL'];
-  const type = document.getElementById('adminType')?.value || 'AC';
-  const donor = document.getElementById('adminDonor')?.value || wd.donors[0];
+function renderAdminPanel() {
+  if (adminWorkingData) collectAdminFormData();
+  document.getElementById('adminTabs').innerHTML = Object.entries(ADMIN_TAB_LABELS).map(([id, label]) =>
+    `<div class="admin-tab ${adminActiveTab === id ? 'active' : ''}" onclick="switchAdminTab('${id}')">${label}</div>`
+  ).join('');
+  document.getElementById('adminBody').innerHTML = buildAdminTabContent();
+  document.getElementById('adminFooterBar').innerHTML = buildAdminFooterBar();
+}
 
-  let tableHtml = `<thead><tr><th>Organisation</th>`;
-  wd.years.forEach(y => { tableHtml += `<th>${y}</th>`; });
+function switchAdminTab(tab) {
+  adminActiveTab = tab;
+  renderAdminPanel();
+}
+
+function buildAdminTabContent() {
+  if (!adminWorkingData) adminWorkingData = deepClone(PAGEBLOCK);
+  if (adminActiveTab === 'contributions') return buildAdminContributionsTab();
+  if (adminActiveTab === 'fx') return buildAdminFxTab();
+  return buildAdminFondsTab();
+}
+
+function buildAdminContributionsTab() {
+  const wd = adminWorkingData;
+  const donor = document.getElementById('adminDonor')?.value || wd.donors[0];
+  let tableHtml = `<thead><tr><th class="admin-sticky" rowspan="2">Organisation</th>`;
+  wd.years.forEach(y => { tableHtml += `<th class="admin-year-group" colspan="3">${y}</th>`; });
+  tableHtml += `</tr><tr>`;
+  wd.years.forEach(() => {
+    tableHtml += `<th class="admin-sub admin-year-cell">AC</th><th class="admin-sub">VC</th><th class="admin-sub">Total</th>`;
+  });
   tableHtml += `</tr></thead><tbody>`;
+
   wd.orgs.forEach(org => {
     tableHtml += `<tr><td>${org}</td>`;
     wd.years.forEach(y => {
-      const val = wd.data[type]?.[donor]?.[org]?.[String(y)];
-      const display = (val == null) ? '' : val;
-      tableHtml += `<td><input type="text" data-type="${type}" data-donor="${donor}" data-org="${org}" data-year="${y}" value="${display}" onchange="adminCellChange(this)"></td>`;
+      const ys = String(y);
+      const ac = wd.data.AC?.[donor]?.[org]?.[ys];
+      const vc = wd.data.VC?.[donor]?.[org]?.[ys];
+      const total = calcAdminTotal(ac, vc);
+      const acDisplay = ac == null ? '' : ac;
+      const vcDisplay = vc == null ? '' : vc;
+      const totalDisplay = total == null ? 'N/D' : fmt(total);
+      const totalClass = total == null ? 'admin-total-val null-val' : 'admin-total-val';
+      tableHtml += `<td class="admin-year-cell"><input type="text" data-type="AC" data-donor="${donor}" data-org="${org}" data-year="${y}" value="${acDisplay}" onchange="adminCellChange(this)"></td>`;
+      tableHtml += `<td><input type="text" data-type="VC" data-donor="${donor}" data-org="${org}" data-year="${y}" value="${vcDisplay}" onchange="adminCellChange(this)"></td>`;
+      tableHtml += `<td><span class="${totalClass}" data-total-donor="${donor}" data-total-org="${org}" data-total-year="${y}">${totalDisplay}</span></td>`;
     });
     tableHtml += `</tr>`;
   });
   tableHtml += `</tbody>`;
 
-  let fxHtml = `<thead><tr><th>Année</th><th>EUR/USD</th><th>EUR/CHF</th><th>CHF/USD</th></tr></thead><tbody>`;
+  return `
+    <div class="admin-section">
+      <h3>Contributions <span class="admin-badge">${wd.years[0]}–${wd.years[wd.years.length - 1]}</span></h3>
+      <p class="admin-section-desc">Modifiez les montants AC et VC par organisation. Les totaux sont calculés automatiquement (AC + VC). Laissez une cellule vide pour indiquer une donnée non disponible (N/D).</p>
+      <div class="admin-controls">
+        <label>Pays donateur
+          <select id="adminDonor" onchange="renderAdminPanel()">
+            ${wd.donors.map(d => `<option value="${d}" ${d === donor ? 'selected' : ''}>${formatDonorLabel(d)}</option>`).join('')}
+          </select>
+        </label>
+        <div class="admin-btn-row">
+          <button type="button" class="admin-btn secondary" onclick="adminAddYear()">+ Ajouter une année</button>
+          <button type="button" class="admin-btn secondary" onclick="adminAddOrg()">+ Ajouter une organisation</button>
+          <button type="button" class="admin-btn secondary" onclick="adminAddDonor()">+ Ajouter un pays</button>
+        </div>
+      </div>
+      <div class="admin-table-wrap"><table class="admin-table" id="adminContribTable">${tableHtml}</table></div>
+    </div>`;
+}
+
+function buildAdminFxTab() {
+  const wd = adminWorkingData;
+  let fxHtml = `<thead><tr><th class="admin-sticky">Année</th><th>EUR/USD</th><th>EUR/CHF</th><th>CHF/USD</th></tr></thead><tbody>`;
   wd.fxData.forEach((r, i) => {
     fxHtml += `<tr>
       <td>${r.year}</td>
@@ -1267,13 +1313,23 @@ function buildAdminHTML() {
     </tr>`;
   });
   fxHtml += `</tbody>`;
+  return `
+    <div class="admin-section">
+      <h3>Taux de change</h3>
+      <p class="admin-section-desc">Taux annuels EUR/USD, EUR/CHF et CHF/USD utilisés dans l'onglet « Taux de change » du tableau détaillé.</p>
+      <div class="admin-table-wrap"><table class="admin-table" id="adminFxTable">${fxHtml}</table></div>
+    </div>`;
+}
 
+function buildAdminFondsTab() {
+  const wd = adminWorkingData;
   const santeEntities = [...wd.santeONU, ...wd.santeFonds];
-  let santeHtml = `<thead><tr><th>Entité</th>`;
+  let santeHtml = `<thead><tr><th class="admin-sticky">Entité</th>`;
   wd.santeYears.forEach(y => { santeHtml += `<th>${y}</th>`; });
   santeHtml += `</tr></thead><tbody>`;
   santeEntities.forEach(entity => {
-    santeHtml += `<tr><td>${entity}</td>`;
+    const group = wd.santeONU.includes(entity) ? 'OI genevoises' : 'Fonds verticaux';
+    santeHtml += `<tr><td>${entity} <span style="font-size:.72rem;color:var(--text2);font-weight:400;">(${group})</span></td>`;
     wd.santeYears.forEach(y => {
       const val = wd.santeData[entity]?.[y] ?? wd.santeData[entity]?.[String(y)] ?? '';
       santeHtml += `<td><input type="text" data-sante-entity="${entity}" data-sante-year="${y}" value="${val}" onchange="adminSanteCellChange(this)"></td>`;
@@ -1281,74 +1337,90 @@ function buildAdminHTML() {
     santeHtml += `</tr>`;
   });
   santeHtml += `</tbody>`;
-
   return `
     <div class="admin-section">
-      <h3>Contributions <span class="admin-badge">${wd.years[0]}–${wd.years[wd.years.length-1]}</span></h3>
-      <div class="admin-controls">
-        <label>Type
-          <select id="adminType" onchange="renderAdminPanel()">
-            ${types.map(t => `<option value="${t}" ${t===type?'selected':''}>${t}</option>`).join('')}
-          </select>
-        </label>
-        <label>Pays donateur
-          <select id="adminDonor" onchange="renderAdminPanel()">
-            ${wd.donors.map(d => `<option value="${d}" ${d===donor?'selected':''}>${d}</option>`).join('')}
-          </select>
-        </label>
-        <button type="button" class="admin-btn secondary" onclick="adminAddYear()">+ Ajouter une année</button>
-        <button type="button" class="admin-btn secondary" onclick="adminPreview()">Prévisualiser</button>
-      </div>
-      <div class="admin-table-wrap"><table class="admin-table" id="adminContribTable">${tableHtml}</table></div>
-    </div>
-
-    <div class="admin-section">
-      <h3>Taux de change</h3>
-      <div class="admin-table-wrap"><table class="admin-table" id="adminFxTable">${fxHtml}</table></div>
-    </div>
-
-    <div class="admin-section">
-      <h3>Section Santé — France (AC + VC) <span class="admin-badge">${wd.santeYears[0]}–${wd.santeYears[wd.santeYears.length-1]}</span></h3>
-      <p style="font-size:.82rem;color:var(--text2);margin-bottom:.8rem;">OI genevoises et fonds verticaux santé (OMS, CICR, GAVI, etc.)</p>
-      <div class="admin-btn-row" style="margin-bottom:.8rem;">
-        <button type="button" class="admin-btn secondary" onclick="adminAddSanteYear()">+ Ajouter une année (Santé)</button>
+      <h3>Fonds verticaux &amp; OI genevoises <span class="admin-badge">${wd.santeYears[0]}–${wd.santeYears[wd.santeYears.length - 1]}</span></h3>
+      <p class="admin-section-desc">Contributions françaises (AC + VC) pour la section « OI Genevoises &amp; Fonds verticaux » en bas de page.</p>
+      <div class="admin-btn-row" style="margin-bottom:1rem;">
+        <button type="button" class="admin-btn secondary" onclick="adminAddSanteYear()">+ Ajouter une année</button>
       </div>
       <div class="admin-table-wrap"><table class="admin-table" id="adminSanteTable">${santeHtml}</table></div>
-    </div>
-
-    <div class="admin-section">
-      <h3>Exporter le bloc de données</h3>
-      <p style="font-size:.84rem;color:var(--text2);margin-bottom:.8rem;">Générez le nouveau bloc à copier-coller dans le fichier HTML source.</p>
-      <div class="admin-btn-row" style="margin-bottom:.8rem;">
-        <button type="button" class="admin-btn" onclick="adminGenerateExport()">Générer le bloc</button>
-        <button type="button" class="admin-btn secondary" onclick="adminCopyExport()">Copier</button>
-        <button type="button" class="admin-btn secondary" onclick="adminDownloadExport()">Télécharger (.txt)</button>
-      </div>
-      <textarea id="adminExport" readonly placeholder="Cliquez sur « Générer le bloc » pour afficher le code à copier…"></textarea>
-    </div>
-
-    <div class="admin-section admin-tutorial">
-      <h3>Tutoriel — Mettre à jour la page en 4 étapes</h3>
-      <ol class="admin-steps">
-        <li><strong>Générez le bloc</strong> ci-dessus après avoir modifié les données, puis cliquez sur <strong>Copier</strong> ou <strong>Télécharger (.txt)</strong>.</li>
-        <li>Ouvrez le fichier HTML de la page (<code>[Visualisation] CONTRIBUTIONS OI 2017-25 VF.html</code>) dans un éditeur de texte (Bloc-notes, VS Code, etc.).</li>
-        <li>Repérez dans le fichier la section qui commence par <code>// ═══ BLOC DE DONNÉES</code> et se termine par <code>loadFromPageblock();</code> (tout en haut du code JavaScript, juste après <code>&lt;script&gt;</code>). <strong>Sélectionnez et supprimez cette section entière</strong>, puis collez le bloc exporté à la même place.</li>
-        <li>Enregistrez le fichier et rouvrez la page dans votre navigateur. Les graphiques et tableaux afficheront les nouvelles données.</li>
-      </ol>
-      <p style="font-size:.75rem;color:var(--text2);margin-bottom:.0rem;text-align:right;">Carl Petersen - Me contacter si nécessaire</p>
     </div>`;
+}
+
+function buildAdminFooterBar() {
+  const today = new Date().toISOString().slice(0, 10);
+  return `
+    <div class="admin-footer-actions">
+      <button type="button" class="admin-btn" onclick="adminShowDownloadForm()">Télécharger l'outil mis à jour</button>
+    </div>
+    <div class="admin-download-form ${adminDownloadFormVisible ? 'visible' : ''}" id="adminDownloadForm">
+      <label>NOM<input type="text" id="adminDlNom" placeholder="Dupont"></label>
+      <label>Prénom<input type="text" id="adminDlPrenom" placeholder="Marie"></label>
+      <label>Date<input type="text" id="adminDlDate" placeholder="2026-08-27" value="${today}"></label>
+      <button type="button" class="admin-btn" onclick="adminValidateDownload()">Valider</button>
+    </div>`;
+}
+
+function formatDonorLabel(donor) {
+  return donor === 'Etats-Unis' ? 'États-Unis' : donor;
+}
+
+function parseAdminNumber(raw) {
+  const trimmed = raw.trim();
+  if (trimmed === '') return null;
+  const val = parseFloat(trimmed.replace(/\s/g, '').replace(',', '.'));
+  return isNaN(val) ? NaN : val;
+}
+
+function calcAdminTotal(ac, vc) {
+  if (ac === null || vc === null) return null;
+  return (ac || 0) + (vc || 0);
 }
 
 function adminCellChange(input) {
   const { type, donor, org, year } = input.dataset;
-  const raw = input.value.trim();
-  const val = raw === '' ? null : parseFloat(raw.replace(/\s/g, '').replace(',', '.'));
-  if (raw !== '' && isNaN(val)) { input.classList.add('changed'); return; }
+  if (type === 'TOTAL') return;
+  const val = parseAdminNumber(input.value);
+  if (input.value.trim() !== '' && isNaN(val)) { input.classList.add('changed'); return; }
   if (!adminWorkingData.data[type]) adminWorkingData.data[type] = {};
   if (!adminWorkingData.data[type][donor]) adminWorkingData.data[type][donor] = {};
   if (!adminWorkingData.data[type][donor][org]) adminWorkingData.data[type][donor][org] = {};
   adminWorkingData.data[type][donor][org][year] = val;
   input.classList.add('changed');
+  updateAdminTotalCell(donor, org, year);
+}
+
+function updateAdminTotalCell(donor, org, year) {
+  const ys = String(year);
+  const ac = adminWorkingData.data.AC?.[donor]?.[org]?.[ys];
+  const vc = adminWorkingData.data.VC?.[donor]?.[org]?.[ys];
+  const total = calcAdminTotal(ac, vc);
+  if (!adminWorkingData.data.TOTAL) adminWorkingData.data.TOTAL = {};
+  if (!adminWorkingData.data.TOTAL[donor]) adminWorkingData.data.TOTAL[donor] = {};
+  if (!adminWorkingData.data.TOTAL[donor][org]) adminWorkingData.data.TOTAL[donor][org] = {};
+  adminWorkingData.data.TOTAL[donor][org][ys] = total;
+  const span = document.querySelector(`[data-total-donor="${donor}"][data-total-org="${org}"][data-total-year="${year}"]`);
+  if (span) {
+    span.textContent = total == null ? 'N/D' : fmt(total);
+    span.className = total == null ? 'admin-total-val null-val' : 'admin-total-val';
+  }
+}
+
+function adminRecalculateAllTotals(wd) {
+  wd.donors.forEach(donor => {
+    wd.orgs.forEach(org => {
+      wd.years.forEach(y => {
+        const ys = String(y);
+        const ac = wd.data.AC?.[donor]?.[org]?.[ys];
+        const vc = wd.data.VC?.[donor]?.[org]?.[ys];
+        if (!wd.data.TOTAL) wd.data.TOTAL = {};
+        if (!wd.data.TOTAL[donor]) wd.data.TOTAL[donor] = {};
+        if (!wd.data.TOTAL[donor][org]) wd.data.TOTAL[donor][org] = {};
+        wd.data.TOTAL[donor][org][ys] = calcAdminTotal(ac, vc);
+      });
+    });
+  });
 }
 
 function adminFxChange(input) {
@@ -1362,15 +1434,15 @@ function adminFxChange(input) {
 function adminSanteCellChange(input) {
   const entity = input.dataset.santeEntity;
   const year = parseInt(input.dataset.santeYear);
-  const raw = input.value.trim();
-  const val = raw === '' ? 0 : parseFloat(raw.replace(/\s/g, '').replace(',', '.'));
-  if (raw !== '' && isNaN(val)) { input.classList.add('changed'); return; }
+  const val = parseAdminNumber(input.value);
+  if (input.value.trim() !== '' && isNaN(val)) { input.classList.add('changed'); return; }
   if (!adminWorkingData.santeData[entity]) adminWorkingData.santeData[entity] = {};
-  adminWorkingData.santeData[entity][year] = val;
+  adminWorkingData.santeData[entity][year] = val == null ? 0 : val;
   input.classList.add('changed');
 }
 
 function adminAddYear() {
+  collectAdminFormData();
   const lastYear = adminWorkingData.years[adminWorkingData.years.length - 1];
   const newYear = prompt('Numéro de la nouvelle année :', String(lastYear + 1));
   if (!newYear) return;
@@ -1380,29 +1452,80 @@ function adminAddYear() {
   adminWorkingData.years.push(y);
   adminWorkingData.years.sort((a, b) => a - b);
 
-  ['AC', 'VC', 'TOTAL'].forEach(type => {
-    adminWorkingData.donors.forEach(donor => {
-      adminWorkingData.orgs.forEach(org => {
-        if (!adminWorkingData.data[type]?.[donor]?.[org]) {
-          if (!adminWorkingData.data[type]) adminWorkingData.data[type] = {};
-          if (!adminWorkingData.data[type][donor]) adminWorkingData.data[type][donor] = {};
-          if (!adminWorkingData.data[type][donor][org]) adminWorkingData.data[type][donor][org] = {};
-        }
+  adminWorkingData.donors.forEach(donor => {
+    adminWorkingData.orgs.forEach(org => {
+      ['AC', 'VC'].forEach(type => {
+        if (!adminWorkingData.data[type]) adminWorkingData.data[type] = {};
+        if (!adminWorkingData.data[type][donor]) adminWorkingData.data[type][donor] = {};
+        if (!adminWorkingData.data[type][donor][org]) adminWorkingData.data[type][donor][org] = {};
         if (adminWorkingData.data[type][donor][org][String(y)] === undefined)
           adminWorkingData.data[type][donor][org][String(y)] = 0;
       });
     });
   });
+  adminRecalculateAllTotals(adminWorkingData);
 
   const prevFx = adminWorkingData.fxData.find(r => r.year === lastYear) || adminWorkingData.fxData[0];
-  adminWorkingData.fxData.unshift({ year: y, eurUsd: prevFx.eurUsd, eurChf: prevFx.eurChf, chfUsd: prevFx.chfUsd });
+  if (!adminWorkingData.fxData.some(r => r.year === y))
+    adminWorkingData.fxData.unshift({ year: y, eurUsd: prevFx.eurUsd, eurChf: prevFx.eurChf, chfUsd: prevFx.chfUsd });
 
   renderAdminPanel();
 }
 
+function adminAddOrg() {
+  collectAdminFormData();
+  const name = prompt('Nom de la nouvelle organisation (ex. BCAH) :');
+  if (!name || !name.trim()) return;
+  const org = name.trim();
+  if (adminWorkingData.orgs.includes(org)) { alert('Cette organisation existe déjà.'); return; }
+
+  adminWorkingData.orgs.push(org);
+  const color = ADMIN_DEFAULT_ORG_COLORS[adminWorkingData.orgs.length % ADMIN_DEFAULT_ORG_COLORS.length];
+  adminWorkingData.orgColors.push(color);
+
+  adminWorkingData.donors.forEach(donor => {
+    adminWorkingData.years.forEach(y => {
+      ['AC', 'VC'].forEach(type => {
+        if (!adminWorkingData.data[type]) adminWorkingData.data[type] = {};
+        if (!adminWorkingData.data[type][donor]) adminWorkingData.data[type][donor] = {};
+        if (!adminWorkingData.data[type][donor][org]) adminWorkingData.data[type][donor][org] = {};
+        adminWorkingData.data[type][donor][org][String(y)] = 0;
+      });
+    });
+  });
+  adminRecalculateAllTotals(adminWorkingData);
+  renderAdminPanel();
+}
+
+function adminAddDonor() {
+  collectAdminFormData();
+  const name = prompt('Nom du nouveau pays donateur :');
+  if (!name || !name.trim()) return;
+  const donor = name.trim();
+  if (adminWorkingData.donors.includes(donor)) { alert('Ce pays existe déjà.'); return; }
+
+  adminWorkingData.donors.push(donor);
+  const color = ADMIN_DEFAULT_DONOR_COLORS[adminWorkingData.donors.length % ADMIN_DEFAULT_DONOR_COLORS.length];
+  adminWorkingData.donorColors.push(color);
+
+  adminWorkingData.orgs.forEach(org => {
+    adminWorkingData.years.forEach(y => {
+      ['AC', 'VC'].forEach(type => {
+        if (!adminWorkingData.data[type]) adminWorkingData.data[type] = {};
+        if (!adminWorkingData.data[type][donor]) adminWorkingData.data[type][donor] = {};
+        if (!adminWorkingData.data[type][donor][org]) adminWorkingData.data[type][donor][org] = {};
+        adminWorkingData.data[type][donor][org][String(y)] = 0;
+      });
+    });
+  });
+  adminRecalculateAllTotals(adminWorkingData);
+  renderAdminPanel();
+}
+
 function adminAddSanteYear() {
+  collectAdminFormData();
   const lastYear = adminWorkingData.santeYears[adminWorkingData.santeYears.length - 1];
-  const newYear = prompt('Numéro de la nouvelle année (section Santé) :', String(lastYear + 1));
+  const newYear = prompt('Numéro de la nouvelle année (Fonds verticaux) :', String(lastYear + 1));
   if (!newYear) return;
   const y = parseInt(newYear);
   if (isNaN(y) || adminWorkingData.santeYears.includes(y)) { alert('Année invalide ou déjà existante.'); return; }
@@ -1415,43 +1538,69 @@ function adminAddSanteYear() {
   renderAdminPanel();
 }
 
-function adminPreview() {
+function collectAdminFormData() {
+  document.querySelectorAll('#adminContribTable input').forEach(input => adminCellChange(input));
+  document.querySelectorAll('#adminFxTable input[data-fx]').forEach(input => adminFxChange(input));
+  document.querySelectorAll('#adminSanteTable input').forEach(input => adminSanteCellChange(input));
+  adminRecalculateAllTotals(adminWorkingData);
+}
+
+function adminShowDownloadForm() {
   collectAdminFormData();
+  adminRecalculateAllTotals(adminWorkingData);
+  adminDownloadFormVisible = true;
+  renderAdminPanel();
+}
+
+function adminValidateDownload() {
+  const nom = document.getElementById('adminDlNom')?.value.trim();
+  const prenom = document.getElementById('adminDlPrenom')?.value.trim();
+  const date = document.getElementById('adminDlDate')?.value.trim();
+  if (!nom || !prenom || !date) { alert('Veuillez remplir les champs NOM, Prénom et Date.'); return; }
+
+  collectAdminFormData();
+  adminRecalculateAllTotals(adminWorkingData);
+  const meta = { nom, prenom, date, label: `${prenom} ${nom}` };
+  adminWorkingData.lastModified = meta;
+
+  capturePageTemplate();
+  const html = buildDownloadableHtml(adminWorkingData, meta);
+  const filename = `${nom}_${prenom}_${date}_Contributions_OI_Genève.html`;
+  downloadTextFile(html, filename, 'text/html;charset=utf-8');
+
   Object.assign(PAGEBLOCK, deepClone(adminWorkingData));
   loadFromPageblock();
   rebuildYearSelects();
+  rebuildOrgSelect();
+  rebuildDonorPanel();
+  updateFooterModified(meta);
   updateFxTable();
   update();
   if (typeof updateSante === 'function') updateSante();
-  alert('Prévisualisation appliquée. N\'oubliez pas d\'exporter et de coller le bloc dans le fichier HTML pour rendre les changements permanents.');
+  capturePageTemplate();
 }
 
-function rebuildYearSelects() {
-  const yf = document.getElementById('yearFrom');
-  const yt = document.getElementById('yearTo');
-  const curFrom = parseInt(yf.value) || years[0];
-  const curTo = parseInt(yt.value) || years[years.length - 1];
-  yf.innerHTML = ''; yt.innerHTML = '';
-  years.forEach(y => {
-    yf.innerHTML += `<option value="${y}" ${y===curFrom?'selected':''}>${y}</option>`;
-    yt.innerHTML += `<option value="${y}" ${y===curTo?'selected':''}>${y}</option>`;
-  });
+function buildDownloadableHtml(wd, meta) {
+  let html = pageTemplateHtml;
+  const pagblockStr = serializePagblock(wd);
+  html = html.replace(/const PAGEBLOCK = \{[\s\S]*?\};\n\/\/ ═/, pagblockStr + '\n// ═');
+  html = rebuildOrgSelectInHtml(html, wd.orgs);
+  html = rebuildDonorPanelInHtml(html, wd.donors);
+  html = rebuildSantePieModeInHtml(html, wd.santeYears);
+  html = updateYearLabelsInHtml(html, wd.years, wd.santeYears);
+  html = updateFooterModifiedInHtml(html, meta);
+  html = html.replace(/class="admin-overlay open"/g, 'class="admin-overlay"');
+  return html;
 }
 
-function formatPagblockExport(wd) {
-  const dataStr = JSON.stringify(wd.data, null, 2);
-  const fxStr = JSON.stringify(wd.fxData, null, 2)
+function serializePagblock(wd) {
+  const dataStr = JSON.stringify(wd.data);
+  const fxStr = JSON.stringify(wd.fxData)
     .replace(/"year"/g, 'year').replace(/"eurUsd"/g, 'eurUsd').replace(/"eurChf"/g, 'eurChf').replace(/"chfUsd"/g, 'chfUsd');
-  let santeStr = JSON.stringify(wd.santeData, null, 2);
+  let santeStr = JSON.stringify(wd.santeData);
   santeStr = santeStr.replace(/"(\d{4})"/g, '$1');
-  return `// ═══════════════════════════════════════════════════════════════════════════════
-// BLOC DE DONNÉES — Remplacez tout ce bloc pour mettre à jour la page
-// Structure: data[type][donor][org][year] = value (USD)
-// type: 'AC' | 'VC' | 'TOTAL'
-// santeData[entité][année] = contributions France AC+VC (section Santé)
-// null = donnée non encore disponible (distinct de 0)
-// ═══════════════════════════════════════════════════════════════════════════════
-const PAGEBLOCK = {
+  const lastMod = wd.lastModified ? `,\n  lastModified: ${JSON.stringify(wd.lastModified)}` : '';
+  return `const PAGEBLOCK = {
   data: ${dataStr},
   fxData: ${fxStr},
   years: ${JSON.stringify(wd.years)},
@@ -1463,49 +1612,108 @@ const PAGEBLOCK = {
   santeONU: ${JSON.stringify(wd.santeONU)},
   santeFonds: ${JSON.stringify(wd.santeFonds)},
   santeColors: ${JSON.stringify(wd.santeColors)},
-  santeYears: ${JSON.stringify(wd.santeYears)}
-};
-// ═══════════════════════════════════════════════════════════════════════════════
-
-let data, fxData, years, orgs, donors, orgColors, donorColors;
-let santeData, santeONU, santeFonds, santeColors, santeYears;
-function loadFromPageblock() {
-  ({ data, fxData, years, orgs, donors, orgColors, donorColors,
-     santeData, santeONU, santeFonds, santeColors, santeYears } = PAGEBLOCK);
-}
-loadFromPageblock();
-`;
+  santeYears: ${JSON.stringify(wd.santeYears)}${lastMod}
+};`;
 }
 
-function adminGenerateExport() {
-  collectAdminFormData();
-  document.getElementById('adminExport').value = formatPagblockExport(adminWorkingData);
+function rebuildOrgSelectInHtml(html, orgs) {
+  const options = ['<option value="all">Toutes les organisations</option>']
+    .concat(orgs.map(o => `<option value="${o}">${o}</option>`)).join('\n      ');
+  return html.replace(/<select id="orgSelect">[\s\S]*?<\/select>/,
+    `<select id="orgSelect">\n      ${options}\n    </select>`);
 }
 
-function collectAdminFormData() {
-  document.querySelectorAll('#adminContribTable input').forEach(input => adminCellChange(input));
-  document.querySelectorAll('#adminFxTable input[data-fx]').forEach(input => adminFxChange(input));
-  document.querySelectorAll('#adminSanteTable input').forEach(input => adminSanteCellChange(input));
+function rebuildDonorPanelInHtml(html, donors) {
+  const items = donors.map(d =>
+    `<label class="donor-panel-item"><input type="checkbox" name="donor" value="${d}"${d === 'France' ? ' checked' : ''}> ${formatDonorLabel(d)}</label>`
+  ).join('\n        ');
+  return html.replace(/<hr class="donor-panel-sep">[\s\S]*?(?=      <\/div>\n    <\/div>\n  <\/label>)/,
+    `<hr class="donor-panel-sep">\n        ${items}\n        `);
 }
 
-function adminCopyExport() {
-  const ta = document.getElementById('adminExport');
-  if (!ta.value) { adminGenerateExport(); }
-  ta.select();
-  navigator.clipboard.writeText(ta.value).then(() => alert('Bloc copié dans le presse-papiers !')).catch(() => {
-    document.execCommand('copy');
-    alert('Bloc copié dans le presse-papiers !');
+function rebuildSantePieModeInHtml(html, santeYears) {
+  const yearOpts = santeYears.map(y => `<option value="${y}">${y}</option>`).join('\n        ');
+  const first = santeYears[0];
+  const last = santeYears[santeYears.length - 1];
+  const totalLabel = santeYears.length > 1
+    ? `Total ${santeYears.length} ans (${first}–${last})`
+    : `Total ${first}`;
+  return html.replace(/<select id="santePieMode" onchange="updateSante\(\)">[\s\S]*?<\/select>/,
+    `<select id="santePieMode" onchange="updateSante()">\n        ${yearOpts}\n        <option value="total" selected>${totalLabel}</option>\n      </select>`);
+}
+
+function updateYearLabelsInHtml(html, years, santeYears) {
+  html = html.replace(/(\d{4}) – (\d{4}) (&nbsp;·&nbsp; Contributions)/,
+    `${years[0]} – ${years[years.length - 1]} $3`);
+  html = html.replace(/France \(AC \+ VC\) · (\d{4})–(\d{4})/,
+    `France (AC + VC) · ${santeYears[0]}–${santeYears[santeYears.length - 1]}`);
+  html = html.replace(/Total 3 ans \((\d{4})–(\d{4})\)/,
+    `Total ${santeYears.length} ans (${santeYears[0]}–${santeYears[santeYears.length - 1]})`);
+  return html;
+}
+
+function formatFooterModifiedText(meta) {
+  return ` · Dernière modification : ${meta.date} par ${meta.label}`;
+}
+
+function updateFooterModifiedInHtml(html, meta) {
+  const modText = formatFooterModifiedText(meta);
+  if (html.includes('id="footerModified"')) {
+    return html.replace(/<span class="footer-modified" id="footerModified">[\s\S]*?<\/span>/,
+      `<span class="footer-modified" id="footerModified">${modText}</span>`);
+  }
+  return html.replace('</span>\n  <button type="button" class="admin-trigger"',
+    `<span class="footer-modified" id="footerModified">${modText}</span></span>\n  <button type="button" class="admin-trigger"`);
+}
+
+function updateFooterModified(meta) {
+  const el = document.getElementById('footerModified');
+  if (el) el.textContent = formatFooterModifiedText(meta);
+}
+
+function rebuildOrgSelect() {
+  const sel = document.getElementById('orgSelect');
+  const current = sel.value;
+  sel.innerHTML = '<option value="all">Toutes les organisations</option>' +
+    orgs.map(o => `<option value="${o}">${o}</option>`).join('');
+  if ([...sel.options].some(o => o.value === current)) sel.value = current;
+}
+
+function rebuildDonorPanel() {
+  const panel = document.getElementById('donorPanel');
+  const checked = getCheckedDonors();
+  const actions = panel.querySelector('.donor-panel-actions').outerHTML;
+  const sep = '<hr class="donor-panel-sep">';
+  const items = donors.map(d => {
+    const isChecked = checked.includes(d) || (checked.length === 0 && d === 'France');
+    return `<label class="donor-panel-item"><input type="checkbox" name="donor" value="${d}"${isChecked ? ' checked' : ''}> ${formatDonorLabel(d)}</label>`;
+  }).join('');
+  panel.innerHTML = actions + sep + items;
+  document.querySelectorAll('input[name="donor"]').forEach(cb => {
+    cb.addEventListener('change', () => { updateDonorLabel(); update(); });
   });
+  updateDonorLabel();
 }
 
-function adminDownloadExport() {
-  if (!document.getElementById('adminExport').value) adminGenerateExport();
-  const blob = new Blob([document.getElementById('adminExport').value], { type: 'text/plain' });
+function downloadTextFile(content, filename, mime) {
+  const blob = new Blob([content], { type: mime });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'bloc-donnees-contributions-OI.txt';
+  a.download = filename;
   a.click();
   URL.revokeObjectURL(a.href);
+}
+
+function rebuildYearSelects() {
+  const yf = document.getElementById('yearFrom');
+  const yt = document.getElementById('yearTo');
+  const curFrom = parseInt(yf.value) || years[0];
+  const curTo = parseInt(yt.value) || years[years.length - 1];
+  yf.innerHTML = ''; yt.innerHTML = '';
+  years.forEach(y => {
+    yf.innerHTML += `<option value="${y}" ${y === curFrom ? 'selected' : ''}>${y}</option>`;
+    yt.innerHTML += `<option value="${y}" ${y === curTo ? 'selected' : ''}>${y}</option>`;
+  });
 }
 
 document.getElementById('adminOverlay').addEventListener('click', function(e) {
@@ -1816,6 +2024,8 @@ function init() {
   updateFxTable();
   update();
   initSante();
+  capturePageTemplate();
+  if (PAGEBLOCK.lastModified) updateFooterModified(PAGEBLOCK.lastModified);
 }
 
 init();
